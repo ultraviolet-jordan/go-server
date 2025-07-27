@@ -135,6 +135,24 @@ func (p *Packet) PDATA(src []int8, offset int32, length int32) {
 
 // ----
 
+func (p *Packet) PSIZE4(len int32) {
+	p.Data[p.Pos-len-4] = int8(len >> 24)
+	p.Data[p.Pos-len-3] = int8(len >> 16)
+	p.Data[p.Pos-len-2] = int8(len >> 8)
+	p.Data[p.Pos-len-1] = int8(len)
+}
+
+func (p *Packet) PSIZE2(len int32) {
+	p.Data[p.Pos-len-2] = int8(len >> 8)
+	p.Data[p.Pos-len-1] = int8(len)
+}
+
+func (p *Packet) PSIZE1(len int32) {
+	p.Data[p.Pos-len-1] = int8(len)
+}
+
+// ----
+
 func (p *Packet) GSMARTS() int32 {
 	if uint8(p.Data[p.Pos]) < 128 {
 		return p.G1() - 64
