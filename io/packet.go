@@ -7,14 +7,22 @@ import (
 	"unsafe"
 )
 
+var strDecoder = charmap.Windows1252.NewDecoder()
+var strEncoder = charmap.Windows1252.NewEncoder()
+
+// ----
+
 type Packet struct {
 	Data   []int8
 	Pos    int32
 	BitPos int32
 }
 
-var strDecoder = charmap.Windows1252.NewDecoder()
-var strEncoder = charmap.Windows1252.NewEncoder()
+func NewPacket(len int32) *Packet {
+	return &Packet{
+		Data: make([]int8, len),
+	}
+}
 
 // ----
 

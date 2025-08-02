@@ -6,9 +6,7 @@ import (
 )
 
 func TestPacket1(t *testing.T) {
-	packet := &Packet{
-		Data: make([]int8, 1),
-	}
+	packet := NewPacket(1)
 	packet.P1(255)
 	packet.Pos = 0
 	result := packet.G1()
@@ -18,9 +16,7 @@ func TestPacket1(t *testing.T) {
 }
 
 func TestPacket1S(t *testing.T) {
-	packet := &Packet{
-		Data: make([]int8, 1),
-	}
+	packet := NewPacket(1)
 	packet.P1(255)
 	packet.Pos = 0
 	result := packet.G1S()
@@ -30,9 +26,7 @@ func TestPacket1S(t *testing.T) {
 }
 
 func TestPacket2(t *testing.T) {
-	packet := &Packet{
-		Data: make([]int8, 2),
-	}
+	packet := NewPacket(2)
 	packet.P2(65535)
 	packet.Pos = 0
 	result := packet.G2()
@@ -42,9 +36,7 @@ func TestPacket2(t *testing.T) {
 }
 
 func TestPacket2S(t *testing.T) {
-	packet := &Packet{
-		Data: make([]int8, 2),
-	}
+	packet := NewPacket(2)
 	packet.P2(65535)
 	packet.Pos = 0
 	result := packet.G2S()
@@ -54,9 +46,7 @@ func TestPacket2S(t *testing.T) {
 }
 
 func TestPacketI2(t *testing.T) {
-	packet := &Packet{
-		Data: make([]int8, 2),
-	}
+	packet := NewPacket(2)
 	packet.IP2(65535)
 	packet.Pos = 0
 	result := packet.IG2()
@@ -66,9 +56,7 @@ func TestPacketI2(t *testing.T) {
 }
 
 func TestPacket3(t *testing.T) {
-	packet := &Packet{
-		Data: make([]int8, 3),
-	}
+	packet := NewPacket(3)
 	packet.P3(16777215)
 	packet.Pos = 0
 	result := packet.G3()
@@ -78,9 +66,7 @@ func TestPacket3(t *testing.T) {
 }
 
 func TestPacketI3(t *testing.T) {
-	packet := &Packet{
-		Data: make([]int8, 3),
-	}
+	packet := NewPacket(3)
 	packet.IP3(16777215)
 	packet.Pos = 0
 	result := packet.IG3()
@@ -90,9 +76,7 @@ func TestPacketI3(t *testing.T) {
 }
 
 func TestPacket4(t *testing.T) {
-	packet := &Packet{
-		Data: make([]int8, 4),
-	}
+	packet := NewPacket(4)
 	packet.P4(2147483647)
 	packet.Pos = 0
 	result := packet.G4()
@@ -102,9 +86,7 @@ func TestPacket4(t *testing.T) {
 }
 
 func TestPacketI4(t *testing.T) {
-	packet := &Packet{
-		Data: make([]int8, 4),
-	}
+	packet := NewPacket(4)
 	packet.IP4(2147483647)
 	packet.Pos = 0
 	result := packet.IG4()
@@ -114,9 +96,7 @@ func TestPacketI4(t *testing.T) {
 }
 
 func TestPacket8(t *testing.T) {
-	packet := &Packet{
-		Data: make([]int8, 8),
-	}
+	packet := NewPacket(8)
 	packet.P8(9223372036854775807)
 	packet.Pos = 0
 	result := packet.G8()
@@ -126,9 +106,7 @@ func TestPacket8(t *testing.T) {
 }
 
 func BenchmarkPacket8(b *testing.B) {
-	packet := &Packet{
-		Data: make([]int8, 8),
-	}
+	packet := NewPacket(8)
 
 	b.ResetTimer()
 
@@ -142,9 +120,7 @@ func BenchmarkPacket8(b *testing.B) {
 
 func TestPacketSTR(t *testing.T) {
 	str := "Hello World!"
-	packet := &Packet{
-		Data: make([]int8, len(str)+1),
-	}
+	packet := NewPacket(int32(len(str) + 1))
 	packet.PSTR(str, 10)
 	packet.Pos = 0
 	result := packet.GSTR(10)
@@ -155,9 +131,7 @@ func TestPacketSTR(t *testing.T) {
 
 func BenchmarkPacketSTR(b *testing.B) {
 	str := "Hello World!"
-	packet := &Packet{
-		Data: make([]int8, len(str)+1),
-	}
+	packet := NewPacket(int32(len(str) + 1))
 
 	b.ResetTimer()
 
@@ -170,9 +144,7 @@ func BenchmarkPacketSTR(b *testing.B) {
 }
 
 func TestPacketDATA(t *testing.T) {
-	packet := &Packet{
-		Data: make([]int8, 3),
-	}
+	packet := NewPacket(3)
 
 	packet.PDATA([]int8{1, 2, 3, 4, 5}, 1, 3)
 	packet.Pos = 0
