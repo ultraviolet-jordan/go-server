@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"golang.org/x/text/encoding/charmap"
+	"math"
 	"unsafe"
 )
 
@@ -34,7 +35,7 @@ func FromBytes(bytes []int8) *Packet {
 
 func (p *Packet) G1() int32 {
 	p.Pos += 1
-	return int32(p.Data[p.Pos-1]) & 0xff
+	return int32(p.Data[p.Pos-1]) & math.MaxUint8
 }
 
 func (p *Packet) G1S() int32 {
@@ -71,7 +72,7 @@ func (p *Packet) IG4() int32 {
 }
 
 func (p *Packet) G8() int64 {
-	return (int64(p.G4()) & 0xffffffff << 32) | (int64(p.G4()) & 0xffffffff)
+	return (int64(p.G4()) & math.MaxUint32 << 32) | (int64(p.G4()) & math.MaxUint32)
 }
 
 func (p *Packet) GSTR(terminator byte) string {
@@ -127,8 +128,8 @@ func (p *Packet) IP4(val int32) {
 }
 
 func (p *Packet) P8(val int64) {
-	p.P4(int32((val >> 32) & 0xffffffff))
-	p.P4(int32(val & 0xffffffff))
+	p.P4(int32((val >> 32) & math.MaxUint32))
+	p.P4(int32(val & math.MaxUint32))
 }
 
 func (p *Packet) PSTR(str string, terminator byte) {

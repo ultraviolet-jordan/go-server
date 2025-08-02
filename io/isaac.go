@@ -1,6 +1,10 @@
 package io
 
-const RATIO int32 = -1640531527 // 0x9E3779B9
+import "math"
+
+const (
+	Ratio = int32(-1640531527) // 0x9E3779B9
+)
 
 // ----
 
@@ -37,14 +41,14 @@ func (i *Isaac) Next() int32 {
 // ----
 
 func (i *Isaac) init() {
-	a := RATIO
-	b := RATIO
-	c := RATIO
-	d := RATIO
-	e := RATIO
-	f := RATIO
-	g := RATIO
-	h := RATIO
+	a := Ratio
+	b := Ratio
+	c := Ratio
+	d := Ratio
+	e := Ratio
+	f := Ratio
+	g := Ratio
+	h := Ratio
 
 	for range 4 {
 		a ^= b << 11
@@ -182,10 +186,10 @@ func (i *Isaac) isaac() {
 		case 3:
 			i.a ^= int32(uint32(i.a) >> 16)
 		}
-		i.a += i.mem[(index+128)&0xff]
-		y := i.mem[(x>>2)&0xff] + i.a + i.b
+		i.a += i.mem[(index+128)&math.MaxUint8]
+		y := i.mem[(x>>2)&math.MaxUint8] + i.a + i.b
 		i.mem[index] = y
-		i.b = i.mem[(y>>10)&0xff] + x
+		i.b = i.mem[(y>>10)&math.MaxUint8] + x
 		i.rsl[index] = i.b
 	}
 }
