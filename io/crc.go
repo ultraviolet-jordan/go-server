@@ -16,7 +16,7 @@ type CRC struct {
 
 func NewCRC() *CRC {
 	crc := &CRC{}
-	for b := range 256 {
+	for b := range len(crc.table) {
 		remainder := int32(b)
 		for range 8 {
 			if remainder&0x1 == 1 {

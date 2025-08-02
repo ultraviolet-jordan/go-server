@@ -3,14 +3,16 @@ package io
 import "math"
 
 const (
-	Ratio = int32(-1640531527) // 0x9E3779B9
+	IsaacRatio  = int32(-1640531527) // 0x9E3779B9
+	IsaacRange  = 256
+	IsaacOffset = IsaacRange - 1
 )
 
 // ----
 
 type Isaac struct {
-	rsl   [256]int32
-	mem   [256]int32
+	rsl   [IsaacRange]int32
+	mem   [IsaacRange]int32
 	count int32
 	a     int32
 	b     int32
@@ -33,7 +35,7 @@ func (i *Isaac) Next() int32 {
 	i.count--
 	if count == 0 {
 		i.isaac()
-		i.count = 255
+		i.count = IsaacOffset
 	}
 	return i.rsl[i.count]
 }
@@ -41,14 +43,14 @@ func (i *Isaac) Next() int32 {
 // ----
 
 func (i *Isaac) init() {
-	a := Ratio
-	b := Ratio
-	c := Ratio
-	d := Ratio
-	e := Ratio
-	f := Ratio
-	g := Ratio
-	h := Ratio
+	a := IsaacRatio
+	b := IsaacRatio
+	c := IsaacRatio
+	d := IsaacRatio
+	e := IsaacRatio
+	f := IsaacRatio
+	g := IsaacRatio
+	h := IsaacRatio
 
 	for range 4 {
 		a ^= b << 11
@@ -77,7 +79,7 @@ func (i *Isaac) init() {
 		a += b
 	}
 
-	for index := 0; index < 256; index += 8 {
+	for index := 0; index < IsaacRange; index += 8 {
 		a += i.rsl[index]
 		b += i.rsl[index+1]
 		c += i.rsl[index+2]
@@ -122,7 +124,7 @@ func (i *Isaac) init() {
 		i.mem[index+7] = h
 	}
 
-	for index := 0; index < 256; index += 8 {
+	for index := 0; index < IsaacRange; index += 8 {
 		a += i.mem[index]
 		b += i.mem[index+1]
 		c += i.mem[index+2]
@@ -168,13 +170,13 @@ func (i *Isaac) init() {
 	}
 
 	i.isaac()
-	i.count = 256
+	i.count = IsaacRange
 }
 
 func (i *Isaac) isaac() {
 	i.c++
 	i.b += i.c
-	for index := range 256 {
+	for index := range IsaacRange {
 		x := i.mem[index]
 		switch index & 0x3 {
 		case 0:
