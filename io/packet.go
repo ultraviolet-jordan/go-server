@@ -24,6 +24,14 @@ func NewPacket(len int32) *Packet {
 	}
 }
 
+func FromBytes(bytes []int8) *Packet {
+	copied := make([]int8, len(bytes))
+	copy(copied, bytes)
+	return &Packet{
+		Data: copied,
+	}
+}
+
 // ----
 
 func (p *Packet) G1() int32 {

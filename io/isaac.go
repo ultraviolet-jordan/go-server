@@ -46,7 +46,7 @@ func (i *Isaac) init() {
 	g := RATIO
 	h := RATIO
 
-	for index := 0; index < 4; index++ {
+	for range 4 {
 		a ^= b << 11
 		d += a
 		b += c
@@ -170,7 +170,7 @@ func (i *Isaac) init() {
 func (i *Isaac) isaac() {
 	i.c++
 	i.b += i.c
-	for index := 0; index < 256; index++ {
+	for index := range 256 {
 		x := i.mem[index]
 		switch index & 0x3 {
 		case 0:

@@ -12,7 +12,7 @@ type CRC struct {
 
 func NewCRC() *CRC {
 	crc := &CRC{}
-	for b := 0; b < 256; b++ {
+	for b := range 256 {
 		remainder := int32(b)
 
 		for bit := 0; bit < 8; bit++ {
