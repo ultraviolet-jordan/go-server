@@ -9,7 +9,7 @@ func TestIsaacNoSeed(t *testing.T) {
 	}
 	result := isaac.Next()
 	if result != 1536048213 {
-		t.Errorf("TestIsaac0 expected 1536048213, got %d", result)
+		t.Errorf("TestIsaacNoSeed expected 1536048213, got %d", result)
 	}
 }
 
@@ -20,6 +20,6 @@ func TestIsaacSeed(t *testing.T) {
 	}
 	result := isaac.Next()
 	if result != -107094133 {
-		t.Errorf("TestIsaac0 expected -107094133, got %d", result)
+		t.Errorf("TestIsaacSeed expected -107094133, got %d", result)
 	}
 }
