@@ -5,18 +5,19 @@ import "math"
 // CRC32B Reversed CRC-32 polynomial for Cyclic Redundancy Check (CRC).
 // This is sometimes referred to as CRC32B.
 const (
-	CRC32B = int32(-306674912) // 0xEDB88320
+	CRCRange = 256
+	CRC32B   = int32(-306674912) // 0xEDB88320
 )
 
 // ----
 
 type CRC struct {
-	table [256]int32
+	table [CRCRange]int32
 }
 
 func NewCRC() *CRC {
 	crc := &CRC{}
-	for b := range len(crc.table) {
+	for b := range CRCRange {
 		remainder := int32(b)
 		for range 8 {
 			if remainder&0x1 == 1 {
