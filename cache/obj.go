@@ -151,29 +151,29 @@ func LoadObjs(members bool, dir string) {
 	}
 }
 
-func Get(id int32) *ObjType {
+func GetObj(id int32) *ObjType {
 	if id < 0 || id >= int32(len(objConfigs)) {
 		return nil
 	}
 	return objConfigs[id]
 }
 
-func GetByName(name string) *ObjType {
-	id := GetId(name)
+func GetObjByName(name string) *ObjType {
+	id := GetObjId(name)
 	if id == -1 {
 		return nil
 	}
-	return Get(id)
+	return GetObj(id)
 }
 
-func GetId(name string) int32 {
+func GetObjId(name string) int32 {
 	if id, ok := objNames[name]; ok {
 		return id
 	}
 	return -1
 }
 
-func Count() int32 {
+func CountObjs() int32 {
 	return int32(len(objConfigs))
 }
 
@@ -286,8 +286,8 @@ func (o *ObjType) decode(buf *io.Packet, code int32) {
 }
 
 func (o *ObjType) cert() {
-	template := Get(o.CertTemplate)
-	link := Get(o.CertLink)
+	template := GetObj(o.CertTemplate)
+	link := GetObj(o.CertLink)
 	if template == nil || link == nil {
 		return
 	}
