@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"golang.org/x/text/encoding/charmap"
 	"math"
+	"os"
 	"unsafe"
 )
 
@@ -31,6 +32,15 @@ func FromBytes(bytes []int8) *Packet {
 	}
 }
 
+func FromIO(dir string) *Packet {
+	b, err := os.ReadFile(dir)
+	if err != nil {
+		panic(err) // this file must exist if calling from IO.
+	}
+	//goland:noinspection GoRedundantConversion
+	return FromBytes(unsafe.Slice((*int8)(unsafe.Pointer(unsafe.SliceData(b))), len(b)))
+}
+
 // ----
 
 func (p *Packet) G1() int32 {
@@ -38,9 +48,9 @@ func (p *Packet) G1() int32 {
 	return int32(p.Data[p.Pos-1]) & math.MaxUint8
 }
 
-func (p *Packet) G1S() int32 {
+func (p *Packet) G1S() int8 {
 	p.Pos += 1
-	return int32(p.Data[p.Pos-1])
+	return p.Data[p.Pos-1]
 }
 
 func (p *Packet) G2() int32 {
@@ -48,7 +58,7 @@ func (p *Packet) G2() int32 {
 }
 
 func (p *Packet) G2S() int32 {
-	return (p.G1S() << 8) | p.G1S()
+	return (int32(p.G1S()) << 8) | int32(p.G1S())
 }
 
 func (p *Packet) IG2() int32 {

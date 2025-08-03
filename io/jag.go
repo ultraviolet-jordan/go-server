@@ -26,8 +26,8 @@ func Hash(name string) int32 {
 	return hash
 }
 
-func NewJagFile(bytes []int8) (*JagFile, error) {
-	buf := FromBytes(bytes)
+func NewJagFile(buf *Packet) (*JagFile, error) {
+	// buf := FromBytes(bytes)
 	unpacked := buf.G3()
 	packed := buf.G3()
 
